@@ -1,0 +1,12 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://admin:admin@trabalho.qu7ezoq.mongodb.net/?retryWrites=true&w=majority&appName=Trabalho
+      database: Trabalho
+  security:
+    user:
+      name: admin
+      password: admin
+
+server:
+  port: 8090
