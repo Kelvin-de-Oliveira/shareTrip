@@ -1,27 +1,26 @@
 package com.kelvin.shareTrip.model;
 
-import java.util.UUID;
 
 public class Destino {
-    private UUID id;
+    private Integer id;
     private String nome;
     private String localizacao;
     private String descricao;
 
     public Destino() {}
 
-    public Destino(String nome, String localizacao, String descricao) {
-        this.id = UUID.randomUUID();
+    public Destino(Integer id, String nome, String localizacao, String descricao) {
+        this.id = id;
         this.nome = nome;
         this.localizacao = localizacao;
         this.descricao = descricao;
     }
 
-    public UUID getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
