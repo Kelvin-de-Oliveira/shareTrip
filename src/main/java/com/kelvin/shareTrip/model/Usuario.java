@@ -4,21 +4,19 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.Date;
+//import java.util.List;
 
 @Document(collection = "shareTrip")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Relato {
+
+public class Usuario {
     @Id
     private String id;
-    private String descricao;
-    private String foto;
-    private Date data;
-    //@DBRef
-    //private Usuario criador;
-    //@DBRef
-    //private Destino destino;
+    private String nomeUsuario;
+    private String email;
+    private String senha;
+    //private List<Relato> relatos
+   
 }
