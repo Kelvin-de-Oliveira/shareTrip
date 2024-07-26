@@ -1,53 +1,28 @@
 package com.kelvin.shareTrip.model;
 
+import lombok.*;
 
+import java.util.List;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+
+
+@Document(collection = "shareTrip")
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 public class Destino {
-    private Integer id;
+    @Id
+    private String id;
     private String nome;
-    private String localizacao;
     private String descricao;
+    private String localizacao;
 
-    public Destino() {}
+    @DBRef
+    private List<Relato> relatos;
 
-    public Destino(Integer id, String nome, String localizacao, String descricao) {
-        this.id = id;
-        this.nome = nome;
-        this.localizacao = localizacao;
-        this.descricao = descricao;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getLocalizacao() {
-        return localizacao;
-    }
-
-    public void setLocalizacao(String localizacao) {
-        this.localizacao = localizacao;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-
-    
+   
 }
