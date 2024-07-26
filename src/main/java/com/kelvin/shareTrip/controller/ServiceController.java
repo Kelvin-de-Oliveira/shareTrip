@@ -18,22 +18,22 @@ public class ServiceController {
         return usuarioService.getAllUsuario();
     };
 
-    @GetMapping("/relato/{id}")
+    @GetMapping("/usuario/{id}")
     public Usuario getById(@PathVariable String id) {
         return usuarioService.getUsuarioById(id);
     };
 
-    @PostMapping("/relato/add")
+    @PostMapping("/usuario/add")
     public Usuario add(@RequestBody Usuario usuario){
         return usuarioService.addUsuario(usuario);
     };
 
-    @DeleteMapping("/relato/delete/{id}")
+    @DeleteMapping("/usuario/delete/{id}")
     public Usuario delete(@PathVariable String id) {
         return usuarioService.deleteUsuario(id);
     };
 
-    @PutMapping("/relato/update/{id}")
+    @PutMapping("/usuario/update/{id}")
     public Usuario update(@PathVariable String id, @RequestBody Usuario usuario) {
         return usuarioService.updateUsuario(id, usuario);
     };
