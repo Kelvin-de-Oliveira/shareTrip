@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 
 
-@Document(collection = "shareTrip")
+@Document(collection = "destino")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -20,9 +20,4 @@ public class Destino {
     private String nome;
     private String descricao;
     private String localizacao;
-
-    @DBRef
-    private List<Relato> relatos;
-
-   
 }

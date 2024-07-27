@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 //import java.util.List;
 
-@Document(collection = "shareTrip")
+@Document(collection = "usuario")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -17,6 +17,4 @@ public class Usuario {
     private String nomeUsuario;
     private String email;
     private String senha;
-    //private List<Relato> relatos
-   
 }

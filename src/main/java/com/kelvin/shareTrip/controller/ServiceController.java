@@ -21,27 +21,27 @@ public class ServiceController {
     private UsuarioService usuarioService;
    
     @GetMapping("/usuario/all")
-    public List<Usuario> getAll() {
+    public List<Usuario> getAllUsuario() {
         return usuarioService.getAllUsuario();
     };
 
     @GetMapping("/usuario/{id}")
-    public Usuario getById(@PathVariable String id) {
+    public Usuario getUsuarioById(@PathVariable String id) {
         return usuarioService.getUsuarioById(id);
     };
 
     @PostMapping("/usuario/add")
-    public Usuario add(@RequestBody Usuario usuario){
+    public Usuario addUsuario(@RequestBody Usuario usuario){
         return usuarioService.addUsuario(usuario);
     };
 
     @DeleteMapping("/usuario/delete/{id}")
-    public Usuario delete(@PathVariable String id) {
+    public Usuario deleteUsuario(@PathVariable String id) {
         return usuarioService.deleteUsuario(id);
     };
 
     @PutMapping("/usuario/update/{id}")
-    public Usuario update(@PathVariable String id, @RequestBody Usuario usuario) {
+    public Usuario updateUsuario(@PathVariable String id, @RequestBody Usuario usuario) {
         return usuarioService.updateUsuario(id, usuario);
     };
 
@@ -81,27 +81,27 @@ public class ServiceController {
     private RelatoService relatoService;
     
     @GetMapping("/relato/all")
-    public List<Relato> getAll() {
+    public List<Relato> getAllRelato() {
         return relatoService.getAllRelato();
     };
 
     @GetMapping("/relato/{id}")
-    public Relato getById(@PathVariable String id) {
+    public Relato getRelatoById(@PathVariable String id) {
         return relatoService.getRelatoById(id);
     };
 
     @PostMapping("/relato/add")
-    public Relato add(@RequestBody Relato relato){
+    public Relato addRelato(@RequestBody Relato relato){
         return relatoService.addRelato(relato);
     };
 
     @DeleteMapping("/relato/delete/{id}")
-    public Relato delete(@PathVariable String id) {
+    public Relato deleteRelato(@PathVariable String id) {
         return relatoService.deleteRelato(id);
     };
 
     @PutMapping("/relato/update/{id}")
-    public Relato update(@PathVariable String id, @RequestBody Relato relato) {
+    public Relato updateRelato(@PathVariable String id, @RequestBody Relato relato) {
         return relatoService.updateRelato(id, relato);
     };
 }
