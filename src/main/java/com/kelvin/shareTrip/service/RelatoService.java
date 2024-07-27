@@ -10,6 +10,4 @@ public interface RelatoService {
     public Relato addRelato(Relato relato);
     public Relato deleteRelato(String id);
     public Relato updateRelato(String id, Relato relato);
-    //public List<Relato> getRelatoByDestino(String destinoId);
-    //public List<Relato> getRelatoByCriador(String criadorId);
 }

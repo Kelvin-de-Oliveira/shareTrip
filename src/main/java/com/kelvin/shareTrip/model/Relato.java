@@ -17,8 +17,9 @@ public class Relato {
     private String descricao;
     private String foto;
     private Date data;
-    //@DBRef
-    //private Usuario criador;
-    //@DBRef
-    //private Destino destino;
+    @DBRef
+    private Usuario criador;
+    @DBRef
+    private Destino destino;
+    private int curtidas = 0;
 }
