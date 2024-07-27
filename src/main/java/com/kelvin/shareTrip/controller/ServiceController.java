@@ -4,6 +4,7 @@ import com.kelvin.shareTrip.model.Relato;
 import com.kelvin.shareTrip.service.RelatoService;
 import com.kelvin.shareTrip.model.Destino;
 import com.kelvin.shareTrip.service.DestinoService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,7 +40,6 @@ public class ServiceController {
     public Relato update(@PathVariable String id, @RequestBody Relato relato) {
         return relatoService.updateRelato(id, relato);
     };
-
 
     // Destino 
 
