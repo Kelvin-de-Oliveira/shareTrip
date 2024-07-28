@@ -1,21 +1,19 @@
 package com.kelvin.shareTrip.model;
 
 import lombok.*;
-
-
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
-
-@Document(collection = "destino")
+@Document(collection = "interacao")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Destino {
+public class Interacao {
     @Id
     private String id;
-    private String nome;
-    private String descricao;
-    private String localizacao;
+    @DBRef
+    private Usuario usuario;
+
 }

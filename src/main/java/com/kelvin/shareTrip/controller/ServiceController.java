@@ -2,14 +2,20 @@ package com.kelvin.shareTrip.controller;
 
 import com.kelvin.shareTrip.model.Relato;
 import com.kelvin.shareTrip.service.RelatoService;
+import com.kelvin.shareTrip.model.Comentario;
 import com.kelvin.shareTrip.model.Destino;
+import com.kelvin.shareTrip.model.Interacao;
 import com.kelvin.shareTrip.service.DestinoService;
+import com.kelvin.shareTrip.service.InteracaoService;
 import com.kelvin.shareTrip.model.Usuario;
 import com.kelvin.shareTrip.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -103,5 +109,36 @@ public class ServiceController {
     @PutMapping("/relato/update/{id}")
     public Relato updateRelato(@PathVariable String id, @RequestBody Relato relato) {
         return relatoService.updateRelato(id, relato);
+    };
+
+    //Interacao
+    
+    @Autowired
+    private InteracaoService interacaoService;
+
+
+    @GetMapping("/usuario/interacao/view-usuario/{usuarioId}")
+    public List<Relato> verRelatosUsuario(@PathVariable String usuarioId) {
+        return interacaoService.verRelatosUsuario(usuarioId);
+    };
+
+    @GetMapping("/usuario/interacao/view-destino/{destinoId}")
+    public List<Relato> verRelatosDestino(@PathVariable String destinoId) {
+        return interacaoService.verRelatosDestino(destinoId);
+    };
+
+    @PostMapping("/publicacao/comentar/{relatoId}")
+   public ResponseEntity<?> comentarRelato(@PathVariable("relatoId") String id, @RequestBody Comentario comentario) {
+        try {
+            Comentario savedComentario = interacaoService.comentarRelato(id, comentario);
+            return ResponseEntity.ok(savedComentario);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/publicacao/curtir/{id}")
+    public Relato curtirRelato(@PathVariable String id) {
+        return interacaoService.curtirRelato(id);
     };
 }
