@@ -5,8 +5,6 @@ import com.kelvin.shareTrip.service.RelatoService;
 import com.kelvin.shareTrip.model.Autenticacao;
 import com.kelvin.shareTrip.model.Comentario;
 import com.kelvin.shareTrip.model.Destino;
-import com.kelvin.shareTrip.model.Autenticacao;
-import com.kelvin.shareTrip.model.Interacao;
 import com.kelvin.shareTrip.service.DestinoService;
 import com.kelvin.shareTrip.service.InteracaoService;
 import com.kelvin.shareTrip.model.Usuario;
@@ -14,11 +12,9 @@ import com.kelvin.shareTrip.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import java.util.Optional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -33,7 +29,7 @@ public class ServiceController {
     public ResponseEntity<?> getAllUsuario() {
         List<Usuario> usuarios = usuarioService.getAllUsuario();
         if (usuarios.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não existe nenhum usuário cadastrado");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não existe nenhum usuário cadastrado!");
         } else {
             return ResponseEntity.ok(usuarios);
         }
@@ -43,7 +39,7 @@ public class ServiceController {
     public ResponseEntity<?> getUsuarioById(@PathVariable String id) {
         Usuario usuario = usuarioService.getUsuarioById(id);
         if (usuario == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não foi encontrado");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não foi encontrado!");
         } else {
             return ResponseEntity.ok(usuario);
         }
@@ -63,24 +59,29 @@ public class ServiceController {
     public ResponseEntity<?> deleteUsuario(@PathVariable String id) {
         Usuario usuario = usuarioService.deleteUsuario(id);
         if (usuario == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não foi encontrado");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não foi encontrado!");
         } else {
             return ResponseEntity.ok(usuario);
         }
     }
 
     @PutMapping("/usuario/update/{id}")
-    public Usuario updateUsuario(@PathVariable String id, @RequestBody Usuario usuario) {
-        return usuarioService.updateUsuario(id, usuario);
-    };
+    public ResponseEntity<?> updateUsuario(@PathVariable String id, @RequestBody Usuario usuario) {
+        try {
+            Usuario updatedUsuario = usuarioService.updateUsuario(id, usuario);
+            return new ResponseEntity<>(updatedUsuario, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 
     @PostMapping("/usuario/authenticar")
     public ResponseEntity<String> autenticarUsuario(@RequestBody Autenticacao autenticacao) {
         boolean autenticado = usuarioService.autenticarUsuario(autenticacao.getEmail(), autenticacao.getSenha());
         if (autenticado) {
-            return ResponseEntity.ok("Usuário autenticado com sucesso");
+            return ResponseEntity.ok("Usuário autenticado com sucesso!");
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email ou senha inválidos");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email ou senha inválidos!");
         }
     }
 

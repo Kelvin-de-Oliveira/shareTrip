@@ -29,11 +29,11 @@ public class UsuarioServiceImplementation implements UsuarioService {
     public Usuario addUsuario(Usuario usuario) {
         
         if (usuarioRepo.findByEmail(usuario.getEmail()).isPresent()) {
-            throw new IllegalArgumentException("Email já cadastrado.");
+            throw new IllegalArgumentException("Este e-mail já está sendo usado!");
         }
 
         if (usuarioRepo.findByNomeUsuario(usuario.getNomeUsuario()).isPresent()) {
-            throw new IllegalArgumentException("Nome de usuario já cadastrado.");
+            throw new IllegalArgumentException("Este nome de usuário já está sendo usado!");
         }   
 
         return usuarioRepo.save(usuario);
@@ -51,11 +51,24 @@ public class UsuarioServiceImplementation implements UsuarioService {
     @Override
     public Usuario updateUsuario(String id, Usuario usuario) {
         Usuario usuarioUpdate = usuarioRepo.findById(id).orElse(null);
+        if (usuarioUpdate == null) {
+            throw new IllegalArgumentException("Usuário não encontrado!");
+        }
+
+        Optional<Usuario> usuarioExistentePorEmail = usuarioRepo.findByEmail(usuario.getEmail());
+        if (usuarioExistentePorEmail.isPresent() && !usuarioExistentePorEmail.get().getId().equals(id)) {
+            throw new IllegalArgumentException("Este e-mail já está sendo usado!");
+        }
+
+        Optional<Usuario> usuarioExistentePorNomeUsuario = usuarioRepo.findByNomeUsuario(usuario.getNomeUsuario());
+        if (usuarioExistentePorNomeUsuario.isPresent() && !usuarioExistentePorNomeUsuario.get().getId().equals(id)) {
+            throw new IllegalArgumentException("Este nome de usuário já está sendo usado!");
+        }
+
         usuarioUpdate.setNomeUsuario(usuario.getNomeUsuario());
         usuarioUpdate.setEmail(usuario.getEmail());
         usuarioUpdate.setSenha(usuario.getSenha());
-        usuarioRepo.save(usuarioUpdate);
-        return usuarioUpdate;
+        return usuarioRepo.save(usuarioUpdate);
     }
 
     @Override
