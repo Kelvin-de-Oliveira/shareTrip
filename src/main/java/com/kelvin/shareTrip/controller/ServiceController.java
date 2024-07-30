@@ -40,9 +40,14 @@ public class ServiceController {
     }
 
     @GetMapping("/usuario/{id}")
-    public Usuario getUsuarioById(@PathVariable String id) {
-        return usuarioService.getUsuarioById(id);
-    };
+    public ResponseEntity<?> getUsuarioById(@PathVariable String id) {
+        Usuario usuario = usuarioService.getUsuarioById(id);
+        if (usuario == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não foi encontrado");
+        } else {
+            return ResponseEntity.ok(usuario);
+        }
+    }
 
     @PostMapping("/usuario/add")
     public ResponseEntity<?> addUsuario(@RequestBody Usuario usuario) {
