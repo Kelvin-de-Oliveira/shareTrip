@@ -25,8 +25,17 @@ public class UsuarioServiceImplementation implements UsuarioService {
     }
 
     @Override
-    public Usuario addUsuario(Usuario Usuario) {
-        return usuarioRepo.save(Usuario);
+    public Usuario addUsuario(Usuario usuario) {
+        
+        if (usuarioRepo.findByEmail(usuario.getEmail()).isPresent()) {
+            throw new IllegalArgumentException("Email já cadastrado.");
+        }
+
+        if (usuarioRepo.findByNomeUsuario(usuario.getNomeUsuario()).isPresent()) {
+            throw new IllegalArgumentException("Nome de usuario já cadastrado.");
+        }
+
+        return usuarioRepo.save(usuario);
     }
 
     @Override
@@ -37,11 +46,11 @@ public class UsuarioServiceImplementation implements UsuarioService {
     }
 
     @Override
-    public Usuario updateUsuario(String id, Usuario Usuario) {
+    public Usuario updateUsuario(String id, Usuario usuario) {
         Usuario usuarioUpdate = usuarioRepo.findById(id).orElse(null);
-        usuarioUpdate.setNomeUsuario(Usuario.getNomeUsuario());
-        usuarioUpdate.setEmail(Usuario.getEmail());
-        usuarioUpdate.setSenha(Usuario.getSenha());
+        usuarioUpdate.setNomeUsuario(usuario.getNomeUsuario());
+        usuarioUpdate.setEmail(usuario.getEmail());
+        usuarioUpdate.setSenha(usuario.getSenha());
         usuarioRepo.save(usuarioUpdate);
         return usuarioUpdate;
     }
