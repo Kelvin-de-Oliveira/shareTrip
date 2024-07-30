@@ -14,6 +14,7 @@ import com.kelvin.shareTrip.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import java.util.Optional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,9 +30,14 @@ public class ServiceController {
     private UsuarioService usuarioService;
    
     @GetMapping("/usuario/all")
-    public List<Usuario> getAllUsuario() {
-        return usuarioService.getAllUsuario();
-    };
+    public ResponseEntity<?> getAllUsuario() {
+        List<Usuario> usuarios = usuarioService.getAllUsuario();
+        if (usuarios.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não existe nenhum usuário cadastrado");
+        } else {
+            return ResponseEntity.ok(usuarios);
+        }
+    }
 
     @GetMapping("/usuario/{id}")
     public Usuario getUsuarioById(@PathVariable String id) {
