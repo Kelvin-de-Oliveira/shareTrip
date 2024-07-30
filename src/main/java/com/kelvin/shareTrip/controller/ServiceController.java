@@ -60,9 +60,14 @@ public class ServiceController {
     }
 
     @DeleteMapping("/usuario/delete/{id}")
-    public Usuario deleteUsuario(@PathVariable String id) {
-        return usuarioService.deleteUsuario(id);
-    };
+    public ResponseEntity<?> deleteUsuario(@PathVariable String id) {
+        Usuario usuario = usuarioService.deleteUsuario(id);
+        if (usuario == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não foi encontrado");
+        } else {
+            return ResponseEntity.ok(usuario);
+        }
+    }
 
     @PutMapping("/usuario/update/{id}")
     public Usuario updateUsuario(@PathVariable String id, @RequestBody Usuario usuario) {

@@ -42,7 +42,9 @@ public class UsuarioServiceImplementation implements UsuarioService {
     @Override
     public Usuario deleteUsuario(String id) {
         Usuario usuarioDelete = usuarioRepo.findById(id).orElse(null);
-        usuarioRepo.delete(usuarioDelete);
+        if (usuarioDelete != null) {
+            usuarioRepo.delete(usuarioDelete);
+        }
         return usuarioDelete;
     }
 
