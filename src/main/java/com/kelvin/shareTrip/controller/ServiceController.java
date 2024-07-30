@@ -2,8 +2,10 @@ package com.kelvin.shareTrip.controller;
 
 import com.kelvin.shareTrip.model.Relato;
 import com.kelvin.shareTrip.service.RelatoService;
+import com.kelvin.shareTrip.model.Autenticacao;
 import com.kelvin.shareTrip.model.Comentario;
 import com.kelvin.shareTrip.model.Destino;
+import com.kelvin.shareTrip.model.Autenticacao;
 import com.kelvin.shareTrip.model.Interacao;
 import com.kelvin.shareTrip.service.DestinoService;
 import com.kelvin.shareTrip.service.InteracaoService;
@@ -56,6 +58,15 @@ public class ServiceController {
         return usuarioService.updateUsuario(id, usuario);
     };
 
+    @PostMapping("/usuario/authenticar")
+    public ResponseEntity<String> autenticarUsuario(@RequestBody Autenticacao autenticacao) {
+        boolean autenticado = usuarioService.autenticarUsuario(autenticacao.getEmail(), autenticacao.getSenha());
+        if (autenticado) {
+            return ResponseEntity.ok("Usuário autenticado com sucesso");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email ou senha inválidos");
+        }
+    }
 
     // Destino 
 
