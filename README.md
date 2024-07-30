@@ -1,6 +1,6 @@
-### ShareTrip API
+# ShareTrip API
 
-# ShareTrip é uma plataforma de compartilhamento de relatos de viagem, oferecendo uma API para gerenciar destinos, relatos, usuários e interações, bem como autenticar usuários. Este repositório contém o código fonte da API construída em Java, utilizando Spring Boot e MongoDB Atlas como banco de dados. As requisições foram testadas no Postman, e a estratégia de versionamento do projeto foi implementada por meio do uso de branches.
+### ShareTrip é uma plataforma de compartilhamento de relatos de viagem, oferecendo uma API para gerenciar destinos, relatos, usuários e interações, bem como autenticar usuários. Este repositório contém o código fonte da API construída em Java, utilizando Spring Boot e MongoDB Atlas como banco de dados. As requisições foram testadas no Postman, e a estratégia de versionamento do projeto foi implementada por meio do uso de branches.
 ## Tecnologias Utilizadas
 
   -  Java 17
@@ -10,7 +10,7 @@
 
 ## Estrutura do Projeto
 
-# A API possui 5 classes principais:
+### A API possui 5 classes principais:
 
    - Destino: Representa um destino de viagem.
    - Relato: Representa um relato de viagem compartilhado por um usuário.
@@ -19,24 +19,24 @@
    - Autenticação: Gerencia a autenticação dos usuários.
 
 ## Funcionalidades Principais
-# Operações CRUD
+### Operações CRUD
 
     Destino: Criar, ler, atualizar e deletar destinos.
     Usuario: Criar, ler, atualizar e deletar usuários.
     Relato: Criar, ler, atualizar e deletar relatos.
 
-# Requisições de Autenticação
+### Requisições de Autenticação
 
     Autenticação de usuário para acessar a plataforma.
 
-# Outras Operações
+### Outras Operações
 
     Ver relatos de um usuário.
     Ver relatos relacionados a um destino.
     Curtir um relato.
     Comentar em um relato.
 
-## Endpoints da API
+### Endpoints da API
 Destino
 
     GET /destinos: Lista todos os destinos.
