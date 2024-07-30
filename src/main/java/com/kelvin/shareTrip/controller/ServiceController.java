@@ -37,9 +37,14 @@ public class ServiceController {
     };
 
     @PostMapping("/usuario/add")
-    public Usuario addUsuario(@RequestBody Usuario usuario){
-        return usuarioService.addUsuario(usuario);
-    };
+    public ResponseEntity<?> addUsuario(@RequestBody Usuario usuario) {
+        try {
+            Usuario addedUsuario = usuarioService.addUsuario(usuario);
+            return new ResponseEntity<>(addedUsuario, HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 
     @DeleteMapping("/usuario/delete/{id}")
     public Usuario deleteUsuario(@PathVariable String id) {
@@ -50,6 +55,8 @@ public class ServiceController {
     public Usuario updateUsuario(@PathVariable String id, @RequestBody Usuario usuario) {
         return usuarioService.updateUsuario(id, usuario);
     };
+
+
 
     // Destino 
 
