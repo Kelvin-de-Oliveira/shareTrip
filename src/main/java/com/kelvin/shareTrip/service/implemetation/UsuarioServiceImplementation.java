@@ -5,7 +5,7 @@ import com.kelvin.shareTrip.repo.UsuarioRepo;
 import com.kelvin.shareTrip.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.util.Optional;
 
 import java.util.List;
 
@@ -56,6 +56,13 @@ public class UsuarioServiceImplementation implements UsuarioService {
         return usuarioUpdate;
     }
 
+    @Override
+    public boolean autenticarUsuario(String email, String senha) {
+        Optional<Usuario> optionalUsuario = usuarioRepo.findByEmail(email);
+        return optionalUsuario
+                .map(usuario -> usuario.getSenha().equals(senha))
+                .orElse(false);
+    }
 }
 
 
