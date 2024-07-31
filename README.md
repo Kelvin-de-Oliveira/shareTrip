@@ -31,10 +31,14 @@
 
 ### Outras Operações
 
+    Seguir um usuário.
     Ver relatos de um usuário.
     Ver relatos relacionados a um destino.
     Curtir um relato.
     Comentar em um relato.
+    Ver comentarios de um relato
+    Avaliar um relato.
+    Avaliar um Destino.
 
 ### Endpoints da API
 Destino
