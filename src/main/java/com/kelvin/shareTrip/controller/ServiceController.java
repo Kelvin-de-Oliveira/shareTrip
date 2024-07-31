@@ -49,9 +49,9 @@ public class ServiceController {
     public ResponseEntity<?> addUsuario(@RequestBody Usuario usuario) {
         try {
             Usuario addedUsuario = usuarioService.addUsuario(usuario);
-            return new ResponseEntity<>(addedUsuario, HttpStatus.CREATED);
+            return ResponseEntity.status(HttpStatus.CREATED).body(addedUsuario);
         } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -69,9 +69,9 @@ public class ServiceController {
     public ResponseEntity<?> updateUsuario(@PathVariable String id, @RequestBody Usuario usuario) {
         try {
             Usuario updatedUsuario = usuarioService.updateUsuario(id, usuario);
-            return new ResponseEntity<>(updatedUsuario, HttpStatus.OK);
+            return ResponseEntity.ok(updatedUsuario);
         } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -85,6 +85,16 @@ public class ServiceController {
         }
     }
 
+    @PostMapping("/{idSeguidor}/seguir/{idSeguido}")
+    public ResponseEntity<String> seguirUsuario(@PathVariable String idSeguidor, @PathVariable String idSeguido) {
+        try {
+            usuarioService.seguir(idSeguidor, idSeguido);
+            return  ResponseEntity.ok("Usuário agora segue o outro com sucesso.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    
     // Destino 
 
     @Autowired
