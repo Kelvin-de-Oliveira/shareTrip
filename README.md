@@ -28,21 +28,21 @@
 
 ### Requisições de Autenticação
 
-    Autenticação de usuário para acessar a plataforma.
+   - Autenticação de usuário para acessar a plataforma.
 
 ### Outras Operações
 
-    - Seguir um usuário.
-    - Ver relatos de um usuário.
-    - Ver relatos relacionados a um destino.
-    - Curtir um relato.
-    - Comentar em um relato.
-    - Ver comentarios de um relato
-    - Avaliar um relato.
-    - Avaliar um Destino.
+   - Seguir um usuário.
+   - Ver relatos de um usuário.
+   - Ver relatos relacionados a um destino.
+   - Curtir um relato.
+   - Comentar em um relato.
+   - Ver comentarios de um relato
+   - Avaliar um relato.
+   - Avaliar um Destino.
 
 ### Endpoints da API
-Destino
+#### Destino
 
     GET /api/destino/all: Lista todos os destinos.
     GET /api/destino/{destinoId}: Recupera um destino pelo ID.
@@ -50,7 +50,7 @@ Destino
     PUT /api/destino/update/{destinoId}: Atualiza um destino existente.
     DELETE /api/destino/delete/{destinoId}: Deleta um destino.
 
-Usuario
+#### Usuario
 
     GET /api/usuario/all: Lista todos os usuários.
     GET /api/usuario/{id}: Recupera um usuário pelo ID.
@@ -60,7 +60,7 @@ Usuario
     POST /api/usuario/authenticar: Autentica o acesso de um usuário.
     POST /api/{idSeguidor}/seguir/{idSeguido}.
 
-Relato
+#### Relato
 
     GET /api/relato/all: Lista todos os relatos.
     GET /api/relato/{id}: Recupera um relato pelo ID.
@@ -68,7 +68,7 @@ Relato
     PUT /api/relato/update/{id}: Atualiza um relato existente.
     DELETE /api/relato/delete/: Deleta um relato.
 
-Interação
+#### Interação
 
     GET /api/usuario/interacao/view-usuario/{usuarioID}: Ver relatos de um usuário.
     GET /api/usuario/interacao/view-destino/{destinoId: Ver relatos relacionados a um destino.
