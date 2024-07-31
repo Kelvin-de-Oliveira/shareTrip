@@ -22,4 +22,5 @@ public class Relato {
     @DBRef
     private Destino destino;
     private int curtidas = 0;
+    private Double nota;
 }
