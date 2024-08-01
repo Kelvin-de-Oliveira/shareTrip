@@ -84,9 +84,9 @@ public class InteracaoServiceImplementation implements InteracaoService {
                 usuarioSeguidor.setSeguindo(new ArrayList<>());
             }
 
-            if (idUsuarioSeguidor.equals(idUsuarioSeguido)) {
+            /*if (idUsuarioSeguidor.equals(idUsuarioSeguido)) {
                 throw new RuntimeException("Um usuário não pode seguir a si mesmo.");
-            }
+            }*/
 
             if (!usuarioSeguido.getSeguidores().contains(idUsuarioSeguidor) || !usuarioSeguidor.getSeguindo().contains(idUsuarioSeguido)) {
                 usuarioSeguido.getSeguidores().add(idUsuarioSeguidor);
@@ -100,5 +100,33 @@ public class InteracaoServiceImplementation implements InteracaoService {
             throw new RuntimeException("Usuário(s) não encontrado(s)");
         }
     }
+
+
+    @Override
+    public void deixarDeSeguir(String idUsuarioSeguidor, String idUsuarioSeguido){
+        Optional<Usuario> usuarioSeguidorOpt = usuarioRepo.findById(idUsuarioSeguidor);
+        Optional<Usuario> usuarioSeguidoOpt = usuarioRepo.findById(idUsuarioSeguido);
+
+        if (usuarioSeguidorOpt.isPresent() && usuarioSeguidoOpt.isPresent()) {
+            Usuario usuarioSeguidor = usuarioSeguidorOpt.get();
+            Usuario usuarioSeguido = usuarioSeguidoOpt.get();
+
+        if (usuarioSeguido.getSeguidores() == null || usuarioSeguidor.getSeguindo() == null) {
+            throw new RuntimeException("Nenhuma relação de seguidores encontrada.");
+        }
+
+        if (usuarioSeguido.getSeguidores().contains(idUsuarioSeguidor) && usuarioSeguidor.getSeguindo().contains(idUsuarioSeguido)) {
+            usuarioSeguido.getSeguidores().remove(idUsuarioSeguidor);
+            usuarioSeguidor.getSeguindo().remove(idUsuarioSeguido);
+            usuarioRepo.save(usuarioSeguido);
+            usuarioRepo.save(usuarioSeguidor);
+        } else {
+            throw new RuntimeException("O usuário não está seguindo o outro.");
+        }
+    } else {
+        throw new RuntimeException("Usuário(s) não encontrado(s)");
+    }
+}
+
     
 }

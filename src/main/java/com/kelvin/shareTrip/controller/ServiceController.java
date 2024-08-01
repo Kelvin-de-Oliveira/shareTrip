@@ -178,11 +178,21 @@ public class ServiceController {
 
 
 
-    @PostMapping("/{idSeguidor}/seguir/{idSeguido}")
+    @PostMapping("/interacao/seguir/{idSeguidor}/{idSeguido}")
     public ResponseEntity<String> seguirUsuario(@PathVariable String idSeguidor, @PathVariable String idSeguido) {
         try {
             interacaoService.seguir(idSeguidor, idSeguido);
             return  ResponseEntity.ok("Usuário agora segue o outro com sucesso.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    };
+
+    @DeleteMapping("/interacao/deixarDeSeguir/{idSeguidor}/{idSeguido}")
+    public ResponseEntity<String> deixarDeSeguirUsuario(@PathVariable String idSeguidor, @PathVariable String idSeguido) {
+        try {
+            interacaoService.deixarDeSeguir(idSeguidor, idSeguido);
+            return ResponseEntity.ok("Usuário deixou de seguir o outro com sucesso.");
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

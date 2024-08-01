@@ -10,4 +10,5 @@ public interface InteracaoService {
     public Relato curtirRelato(String relatoId);
     public Comentario comentarRelato(String relatoId, Comentario comentario);
     public void seguir(String idUsuarioSeguidor, String idUsuarioSeguido);
+    public void deixarDeSeguir(String idUsuarioSeguidor, String idUsuarioSeguido);
 }
