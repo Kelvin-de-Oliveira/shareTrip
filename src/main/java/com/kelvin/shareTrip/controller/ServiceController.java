@@ -33,7 +33,7 @@ public class ServiceController {
         } else {
             return ResponseEntity.ok(usuarios);
         }
-    }
+    };
 
     @GetMapping("/usuario/{id}")
     public ResponseEntity<?> getUsuarioById(@PathVariable String id) {
@@ -43,7 +43,7 @@ public class ServiceController {
         } else {
             return ResponseEntity.ok(usuario);
         }
-    }
+    };
 
     @PostMapping("/usuario/add")
     public ResponseEntity<?> addUsuario(@RequestBody Usuario usuario) {
@@ -53,7 +53,7 @@ public class ServiceController {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-    }
+    };
 
     @DeleteMapping("/usuario/delete/{id}")
     public ResponseEntity<?> deleteUsuario(@PathVariable String id) {
@@ -63,7 +63,7 @@ public class ServiceController {
         } else {
             return ResponseEntity.ok(usuario);
         }
-    }
+    };
 
     @PutMapping("/usuario/update/{id}")
     public ResponseEntity<?> updateUsuario(@PathVariable String id, @RequestBody Usuario usuario) {
@@ -73,7 +73,7 @@ public class ServiceController {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-    }
+    };
 
     @PostMapping("/usuario/authenticar")
     public ResponseEntity<String> autenticarUsuario(@RequestBody Autenticacao autenticacao) {
@@ -83,17 +83,7 @@ public class ServiceController {
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email ou senha inválidos!");
         }
-    }
-
-    @PostMapping("/{idSeguidor}/seguir/{idSeguido}")
-    public ResponseEntity<String> seguirUsuario(@PathVariable String idSeguidor, @PathVariable String idSeguido) {
-        try {
-            usuarioService.seguir(idSeguidor, idSeguido);
-            return  ResponseEntity.ok("Usuário agora segue o outro com sucesso.");
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
+    };
     
     // Destino 
 
@@ -179,10 +169,22 @@ public class ServiceController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
-    }
+    };
 
     @PostMapping("/publicacao/curtir/{id}")
     public Relato curtirRelato(@PathVariable String id) {
         return interacaoService.curtirRelato(id);
+    };
+
+
+
+    @PostMapping("/{idSeguidor}/seguir/{idSeguido}")
+    public ResponseEntity<String> seguirUsuario(@PathVariable String idSeguidor, @PathVariable String idSeguido) {
+        try {
+            interacaoService.seguir(idSeguidor, idSeguido);
+            return  ResponseEntity.ok("Usuário agora segue o outro com sucesso.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     };
 }

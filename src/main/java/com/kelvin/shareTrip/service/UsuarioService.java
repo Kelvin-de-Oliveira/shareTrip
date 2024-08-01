@@ -11,5 +11,4 @@ public interface UsuarioService {
     public Usuario deleteUsuario(String id);
     public Usuario updateUsuario(String id, Usuario usuario);
     public boolean autenticarUsuario(String email, String senha);
-    public void seguir(String idUsuarioSeguidor, String idUsuarioSeguido);
 }

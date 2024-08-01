@@ -5,10 +5,9 @@ import com.kelvin.shareTrip.repo.UsuarioRepo;
 import com.kelvin.shareTrip.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
-import java.util.ArrayList;
+
 import java.util.List;
 
 @Service
@@ -118,39 +117,6 @@ public class UsuarioServiceImplementation implements UsuarioService {
         return false;
     }
 
-
-    @Override
-    public void seguir(String idUsuarioSeguidor, String idUsuarioSeguido){
-        Optional<Usuario> usuarioSeguidorOpt = usuarioRepo.findById(idUsuarioSeguidor);
-        Optional<Usuario> usuarioSeguidoOpt = usuarioRepo.findById(idUsuarioSeguido);
-
-        if (usuarioSeguidorOpt.isPresent() && usuarioSeguidoOpt.isPresent()) {
-            Usuario usuarioSeguidor = usuarioSeguidorOpt.get();
-            Usuario usuarioSeguido = usuarioSeguidoOpt.get();
-
-            if (usuarioSeguido.getSeguidores() == null) {
-                usuarioSeguido.setSeguidores(new ArrayList<>());
-            }
-            if (usuarioSeguidor.getSeguindo() == null) {
-                usuarioSeguidor.setSeguindo(new ArrayList<>());
-            }
-
-            if (idUsuarioSeguidor.equals(idUsuarioSeguido)) {
-                throw new RuntimeException("Um usuário não pode seguir a si mesmo.");
-            }
-
-            if (!usuarioSeguido.getSeguidores().contains(idUsuarioSeguidor) || !usuarioSeguidor.getSeguindo().contains(idUsuarioSeguido)) {
-                usuarioSeguido.getSeguidores().add(idUsuarioSeguidor);
-                usuarioSeguidor.getSeguindo().add(idUsuarioSeguido);
-                usuarioRepo.save(usuarioSeguido);
-                usuarioRepo.save(usuarioSeguidor);
-            } else {
-                throw new RuntimeException("O usuário já segue o outro.");
-            }
-        } else {
-            throw new RuntimeException("Usuário(s) não encontrado(s)");
-        }
-    }
 }
 
 
