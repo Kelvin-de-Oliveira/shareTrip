@@ -108,15 +108,6 @@ public class UsuarioServiceImplementation implements UsuarioService {
         return usuarioRepo.save(usuarioUpdate);
     }
 
-    @Override
-    public boolean autenticarUsuario(String email, String senha) {
-        Usuario usuario = usuarioRepo.findByEmail(email);
-        if (usuario != null) {
-            return usuario.getSenha().equals(senha);
-        }
-        return false;
-    }
-
 }
 
 

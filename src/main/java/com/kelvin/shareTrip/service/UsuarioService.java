@@ -10,5 +10,4 @@ public interface UsuarioService {
     public Usuario addUsuario(Usuario usuario);
     public Usuario deleteUsuario(String id);
     public Usuario updateUsuario(String id, Usuario usuario);
-    public boolean autenticarUsuario(String email, String senha);
 }

@@ -1,14 +1,15 @@
 package com.kelvin.shareTrip.controller;
 
 import com.kelvin.shareTrip.model.Relato;
-import com.kelvin.shareTrip.service.RelatoService;
+import com.kelvin.shareTrip.model.Usuario;
 import com.kelvin.shareTrip.model.Autenticacao;
 import com.kelvin.shareTrip.model.Comentario;
 import com.kelvin.shareTrip.model.Destino;
 import com.kelvin.shareTrip.service.DestinoService;
 import com.kelvin.shareTrip.service.InteracaoService;
-import com.kelvin.shareTrip.model.Usuario;
 import com.kelvin.shareTrip.service.UsuarioService;
+import com.kelvin.shareTrip.service.RelatoService;
+import com.kelvin.shareTrip.service.AutenticacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -75,9 +76,14 @@ public class ServiceController {
         }
     };
 
-    @PostMapping("/usuario/authenticar")
+
+    // Autenticacao
+    @Autowired
+    private AutenticacaoService autenticacaoService;
+
+    @PostMapping("/autenticar")
     public ResponseEntity<String> autenticarUsuario(@RequestBody Autenticacao autenticacao) {
-        boolean autenticado = usuarioService.autenticarUsuario(autenticacao.getEmail(), autenticacao.getSenha());
+        boolean autenticado = autenticacaoService.autenticarUsuario(autenticacao);
         if (autenticado) {
             return ResponseEntity.ok("Usuário autenticado com sucesso!");
         } else {
