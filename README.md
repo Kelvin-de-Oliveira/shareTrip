@@ -74,3 +74,5 @@
     GET /api/usuario/interacao/view-destino/{destinoId: Ver relatos relacionados a um destino.
     POST /api/publicacao/curtir/: Curtir um relato.
     POST api/relato/{relatoId}/comentar: Comentar em um relato.
+#### Link para documentação Geral do Projeto
+- https://docs.google.com/document/d/175vnCrklnXLdTNvbaJLpk6oBoh8QkAeHX1Xr7Fde97c/edit?usp=sharing
