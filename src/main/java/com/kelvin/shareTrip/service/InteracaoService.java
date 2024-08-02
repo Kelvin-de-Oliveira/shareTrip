@@ -9,6 +9,7 @@ public interface InteracaoService {
     public List<Relato> verRelatosDestino(String destinoId);
     public Relato curtirRelato(String relatoId);
     public Comentario comentarRelato(String relatoId, Comentario comentario);
+    public List<Comentario> verComentariosRelato(String relatoId);
     public void seguir(String idUsuarioSeguidor, String idUsuarioSeguido);
     public void deixarDeSeguir(String idUsuarioSeguidor, String idUsuarioSeguido);
 }

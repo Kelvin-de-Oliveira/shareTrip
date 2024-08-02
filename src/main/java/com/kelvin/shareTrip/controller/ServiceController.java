@@ -177,11 +177,15 @@ public class ServiceController {
         }
     };
 
+    @GetMapping("/publicacao/comentarios/{relatoId}")
+    public List<Comentario> verComentariosRelato(@PathVariable String relatoId) {
+        return interacaoService.verComentariosRelato(relatoId);
+    };
+
     @PostMapping("/publicacao/curtir/{id}")
     public Relato curtirRelato(@PathVariable String id) {
         return interacaoService.curtirRelato(id);
     };
-
 
 
     @PostMapping("/interacao/seguir/{idSeguidor}/{idSeguido}")

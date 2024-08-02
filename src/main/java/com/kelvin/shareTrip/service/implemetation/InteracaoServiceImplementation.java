@@ -49,23 +49,27 @@ public class InteracaoServiceImplementation implements InteracaoService {
     }
     @Override
     public Comentario comentarRelato(String relatoId, Comentario comentario) {
-        // Verifica se o relatoId não é nulo
+      
         Assert.notNull(relatoId, "The given relatoId must not be null");
 
-        // Busca o relato pelo ID
+    
         Optional<Relato> relatoOpt = relatoRepo.findById(relatoId);
 
         if (relatoOpt.isPresent()) {
-            // Se o relato é encontrado, associa ao comentário
+           
             Relato relato = relatoOpt.get();
             comentario.setRelato(relato);
 
-            // Salva o comentário no repositório e retorna
+          
             return comentarioRepo.save(comentario);
         } else {
-            // Lança uma exceção se o relato não for encontrado
+           
             throw new IllegalArgumentException("Relato não encontrado para o ID fornecido");
         }
+    }
+    @Override
+    public List<Comentario> verComentariosRelato(String relatoId) {
+        return comentarioRepo.findByRelatoId(relatoId);
     }
 
     @Override

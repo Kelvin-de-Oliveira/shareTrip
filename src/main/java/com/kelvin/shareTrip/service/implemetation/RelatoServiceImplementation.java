@@ -29,18 +29,43 @@ public class RelatoServiceImplementation implements RelatoService {
         return relatoRepo.findById(id).orElse(null);
     }
 
+    // @Override
+    // public Relato addRelato(Relato relato) {
+    //     if (relato.getNota() != null) {
+    //         double nota = relato.getNota();
+    //         if (nota < 0.0 || nota > 5.0) {
+    //             throw new IllegalArgumentException("A nota deve estar entre 0 e 5.");
+    //         }
+    //     }
+    //     Relato savedRelato = relatoRepo.save(relato);
+    //     atualizarNotaDestino(relato.getDestino().getId());
+    //     return savedRelato;
+    // }
+
     @Override
-    public Relato addRelato(Relato relato) {
-        if (relato.getNota() != null) {
-            double nota = relato.getNota();
-            if (nota < 0.0 || nota > 5.0) {
-                throw new IllegalArgumentException("A nota deve estar entre 0 e 5.");
-            }
+public Relato addRelato(Relato relato) {
+    if (relato.getNota() != null) {
+        double nota = relato.getNota();
+        if (nota < 0.0 || nota > 5.0) {
+            throw new IllegalArgumentException("A nota deve estar entre 0 e 5.");
         }
-        Relato savedRelato = relatoRepo.save(relato);
-        atualizarNotaDestino(relato.getDestino().getId());
-        return savedRelato;
     }
+
+    if (relato.getDestino() == null) {
+        throw new IllegalArgumentException("O destino não pode ser nulo.");
+    }
+
+    if (relato.getDestino().getId() == null) {
+        // Supondo que você tenha um repositório para salvar o Destino
+        Destino savedDestino = destinoRepo.save(relato.getDestino());
+        relato.setDestino(savedDestino);
+    }
+
+    Relato savedRelato = relatoRepo.save(relato);
+    atualizarNotaDestino(relato.getDestino().getId());
+    return savedRelato;
+}
+
 
     @Override
     public Relato deleteRelato(String id) {
