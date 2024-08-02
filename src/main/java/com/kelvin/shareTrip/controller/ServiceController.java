@@ -186,7 +186,7 @@ public class ServiceController {
     public Relato curtirRelato(@PathVariable String id) {
         return interacaoService.curtirRelato(id);
     };
-
+                                                                                        
 
     @PostMapping("/interacao/seguir/{idSeguidor}/{idSeguido}")
     public ResponseEntity<String> seguirUsuario(@PathVariable String idSeguidor, @PathVariable String idSeguido) {

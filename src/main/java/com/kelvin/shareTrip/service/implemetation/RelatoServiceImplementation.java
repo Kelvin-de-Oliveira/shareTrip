@@ -29,42 +29,42 @@ public class RelatoServiceImplementation implements RelatoService {
         return relatoRepo.findById(id).orElse(null);
     }
 
-    // @Override
-    // public Relato addRelato(Relato relato) {
-    //     if (relato.getNota() != null) {
-    //         double nota = relato.getNota();
-    //         if (nota < 0.0 || nota > 5.0) {
-    //             throw new IllegalArgumentException("A nota deve estar entre 0 e 5.");
-    //         }
-    //     }
-    //     Relato savedRelato = relatoRepo.save(relato);
-    //     atualizarNotaDestino(relato.getDestino().getId());
-    //     return savedRelato;
-    // }
-
     @Override
-public Relato addRelato(Relato relato) {
-    if (relato.getNota() != null) {
-        double nota = relato.getNota();
-        if (nota < 0.0 || nota > 5.0) {
-            throw new IllegalArgumentException("A nota deve estar entre 0 e 5.");
+    public Relato addRelato(Relato relato) {
+        if (relato.getNota() != null) {
+            double nota = relato.getNota();
+            if (nota < 0.0 || nota > 5.0) {
+                throw new IllegalArgumentException("A nota deve estar entre 0 e 5.");
+            }
         }
+        Relato savedRelato = relatoRepo.save(relato);
+        atualizarNotaDestino(relato.getDestino().getId());
+        return savedRelato;
     }
 
-    if (relato.getDestino() == null) {
-        throw new IllegalArgumentException("O destino não pode ser nulo.");
-    }
+//     @Override
+// public Relato addRelato(Relato relato) {
+//     if (relato.getNota() != null) {
+//         double nota = relato.getNota();
+//         if (nota < 0.0 || nota > 5.0) {
+//             throw new IllegalArgumentException("A nota deve estar entre 0 e 5.");
+//         }
+//     }
 
-    if (relato.getDestino().getId() == null) {
-        // Supondo que você tenha um repositório para salvar o Destino
-        Destino savedDestino = destinoRepo.save(relato.getDestino());
-        relato.setDestino(savedDestino);
-    }
+//     if (relato.getDestino() == null) {
+//         throw new IllegalArgumentException("O destino não pode ser nulo.");
+//     }
 
-    Relato savedRelato = relatoRepo.save(relato);
-    atualizarNotaDestino(relato.getDestino().getId());
-    return savedRelato;
-}
+//     if (relato.getDestino().getId() == null) {
+//         // Supondo que você tenha um repositório para salvar o Destino
+//         Destino savedDestino = destinoRepo.save(relato.getDestino());
+//         relato.setDestino(savedDestino);
+//     }
+
+//     Relato savedRelato = relatoRepo.save(relato);
+//     atualizarNotaDestino(relato.getDestino().getId());
+//     return savedRelato;
+// }
 
 
     @Override
@@ -98,15 +98,33 @@ public Relato addRelato(Relato relato) {
     }
 
     private void atualizarNotaDestino(String destinoId) {
+    try {
         List<Relato> relatosDestino = relatoRepo.findByDestino_Id(destinoId);
+        if (relatosDestino.isEmpty()) {
+            System.out.println("Nenhum relato encontrado para o destino com ID: " + destinoId);
+            return;
+        }
+
         OptionalDouble nota = relatosDestino.stream()
                 .mapToDouble(Relato::getNota)
                 .average();
 
         Destino destino = destinoRepo.findById(destinoId).orElse(null);
-        if (destino != null && nota.isPresent()) {
+        if (destino == null) {
+            System.out.println("Destino não encontrado com ID: " + destinoId);
+            return;
+        }
+
+        if (nota.isPresent()) {
             destino.setNota(nota.getAsDouble());
             destinoRepo.save(destino);
+        } else {
+            System.out.println("Nenhuma nota disponível para calcular a média.");
         }
+    } catch (Exception e) {
+        // Log the exception
+        e.printStackTrace();
     }
+}
+
 }
