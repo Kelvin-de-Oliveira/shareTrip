@@ -81,7 +81,7 @@ public class ServiceController {
     @Autowired
     private AutenticacaoService autenticacaoService;
 
-    @PostMapping("/autenticar")
+    @PostMapping("usuario/autenticar")
     public ResponseEntity<String> autenticarUsuario(@RequestBody Autenticacao autenticacao) {
         boolean autenticado = autenticacaoService.autenticarUsuario(autenticacao);
         if (autenticado) {
