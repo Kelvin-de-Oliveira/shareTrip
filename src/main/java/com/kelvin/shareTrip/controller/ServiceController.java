@@ -1,12 +1,18 @@
 package com.kelvin.shareTrip.controller;
 
 import com.kelvin.shareTrip.model.Relato;
-import com.kelvin.shareTrip.service.RelatoService;
+import com.kelvin.shareTrip.model.Usuario;
+import com.kelvin.shareTrip.model.Autenticacao;
+import com.kelvin.shareTrip.model.Comentario;
 import com.kelvin.shareTrip.model.Destino;
 import com.kelvin.shareTrip.service.DestinoService;
-import com.kelvin.shareTrip.model.Usuario;
+import com.kelvin.shareTrip.service.InteracaoService;
 import com.kelvin.shareTrip.service.UsuarioService;
+import com.kelvin.shareTrip.service.RelatoService;
+import com.kelvin.shareTrip.service.AutenticacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,30 +27,70 @@ public class ServiceController {
     private UsuarioService usuarioService;
    
     @GetMapping("/usuario/all")
-    public List<Usuario> getAllUsuario() {
-        return usuarioService.getAllUsuario();
+    public ResponseEntity<?> getAllUsuario() {
+        List<Usuario> usuarios = usuarioService.getAllUsuario();
+        if (usuarios.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não existe nenhum usuário cadastrado!");
+        } else {
+            return ResponseEntity.ok(usuarios);
+        }
     };
 
     @GetMapping("/usuario/{id}")
-    public Usuario getUsuarioById(@PathVariable String id) {
-        return usuarioService.getUsuarioById(id);
+    public ResponseEntity<?> getUsuarioById(@PathVariable String id) {
+        Usuario usuario = usuarioService.getUsuarioById(id);
+        if (usuario == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não foi encontrado!");
+        } else {
+            return ResponseEntity.ok(usuario);
+        }
     };
 
     @PostMapping("/usuario/add")
-    public Usuario addUsuario(@RequestBody Usuario usuario){
-        return usuarioService.addUsuario(usuario);
+    public ResponseEntity<?> addUsuario(@RequestBody Usuario usuario) {
+        try {
+            Usuario addedUsuario = usuarioService.addUsuario(usuario);
+            return ResponseEntity.status(HttpStatus.CREATED).body(addedUsuario);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     };
 
     @DeleteMapping("/usuario/delete/{id}")
-    public Usuario deleteUsuario(@PathVariable String id) {
-        return usuarioService.deleteUsuario(id);
+    public ResponseEntity<?> deleteUsuario(@PathVariable String id) {
+        Usuario usuario = usuarioService.deleteUsuario(id);
+        if (usuario == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não foi encontrado!");
+        } else {
+            return ResponseEntity.ok(usuario);
+        }
     };
 
     @PutMapping("/usuario/update/{id}")
-    public Usuario updateUsuario(@PathVariable String id, @RequestBody Usuario usuario) {
-        return usuarioService.updateUsuario(id, usuario);
+    public ResponseEntity<?> updateUsuario(@PathVariable String id, @RequestBody Usuario usuario) {
+        try {
+            Usuario updatedUsuario = usuarioService.updateUsuario(id, usuario);
+            return ResponseEntity.ok(updatedUsuario);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     };
 
+
+    // Autenticacao
+    @Autowired
+    private AutenticacaoService autenticacaoService;
+
+    @PostMapping("usuario/autenticar")
+    public ResponseEntity<String> autenticarUsuario(@RequestBody Autenticacao autenticacao) {
+        boolean autenticado = autenticacaoService.autenticarUsuario(autenticacao);
+        if (autenticado) {
+            return ResponseEntity.ok("Usuário autenticado com sucesso!");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email ou senha inválidos!");
+        }
+    };
+    
     // Destino 
 
     @Autowired
@@ -103,5 +149,62 @@ public class ServiceController {
     @PutMapping("/relato/update/{id}")
     public Relato updateRelato(@PathVariable String id, @RequestBody Relato relato) {
         return relatoService.updateRelato(id, relato);
+    };
+
+    //Interacao
+    
+    @Autowired
+    private InteracaoService interacaoService;
+
+
+    @GetMapping("/usuario/interacao/view-usuario/{usuarioId}")
+    public List<Relato> verRelatosUsuario(@PathVariable String usuarioId) {
+        return interacaoService.verRelatosUsuario(usuarioId);
+    };
+
+    @GetMapping("/usuario/interacao/view-destino/{destinoId}")
+    public List<Relato> verRelatosDestino(@PathVariable String destinoId) {
+        return interacaoService.verRelatosDestino(destinoId);
+    };
+
+    @PostMapping("/publicacao/comentar/{relatoId}")
+   public ResponseEntity<?> comentarRelato(@PathVariable("relatoId") String id, @RequestBody Comentario comentario) {
+        try {
+            Comentario savedComentario = interacaoService.comentarRelato(id, comentario);
+            return ResponseEntity.ok(savedComentario);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    };
+
+    @GetMapping("/publicacao/comentarios/{relatoId}")
+    public List<Comentario> verComentariosRelato(@PathVariable String relatoId) {
+        return interacaoService.verComentariosRelato(relatoId);
+    };
+
+    @PostMapping("/publicacao/curtir/{id}")
+    public Relato curtirRelato(@PathVariable String id) {
+        return interacaoService.curtirRelato(id);
+    };
+                                                                                        
+
+    @PostMapping("/interacao/seguir/{idSeguidor}/{idSeguido}")
+    public ResponseEntity<String> seguirUsuario(@PathVariable String idSeguidor, @PathVariable String idSeguido) {
+        try {
+            interacaoService.seguir(idSeguidor, idSeguido);
+            return  ResponseEntity.ok("Usuário agora segue o outro com sucesso.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    };
+
+    @DeleteMapping("/interacao/deixarDeSeguir/{idSeguidor}/{idSeguido}")
+    public ResponseEntity<String> deixarDeSeguirUsuario(@PathVariable String idSeguidor, @PathVariable String idSeguido) {
+        try {
+            interacaoService.deixarDeSeguir(idSeguidor, idSeguido);
+            return ResponseEntity.ok("Usuário deixou de seguir o outro com sucesso.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     };
 }

@@ -5,7 +5,6 @@ import com.kelvin.shareTrip.repo.DestinoRepo;
 import com.kelvin.shareTrip.service.DestinoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 @Service

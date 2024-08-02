@@ -2,10 +2,8 @@ package com.kelvin.shareTrip.model;
 
 import lombok.*;
 
-import java.util.List;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
@@ -20,4 +18,5 @@ public class Destino {
     private String nome;
     private String descricao;
     private String localizacao;
+    private Double nota;
 }

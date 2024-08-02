@@ -8,4 +8,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RelatoRepo extends MongoRepository<Relato, String> {
+
+     List<Relato> findByCriador_Id(String criadorId);
+
+     List<Relato> findByDestino_Id(String destinoId);
 }
